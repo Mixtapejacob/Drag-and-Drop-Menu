@@ -9,40 +9,45 @@
 
 <div class="container">
   <div id="left">
-    <div class="list" draggable="true"><img src="img/item-list-and-list-icon-cocept-vector.jpg">list item 1</div>
-    <div class="list" draggable="true"><img src="img/item-list-and-list-icon-cocept-vector.jpg">list item 2</div>
-    <div class="list" draggable="true"><img src="img/item-list-and-list-icon-cocept-vector.jpg">list item 3</div>
-    <div class="list" draggable="true"><img src="img/item-list-and-list-icon-cocept-vector.jpg">list item 4</div>
+    <div class="list" draggable="true"><img src="img/item-list-and-list-icon-cocept-vector.jpg">list item
+       1</div>
+    <div class="list" draggable="true"><img src="img/item-list-and-list-icon-cocept-vector.jpg">list item 
+      2</div>
+    <div class="list" draggable="true"><img src="img/item-list-and-list-icon-cocept-vector.jpg">list item 
+      3</div>
+    <div class="list" draggable="true"><img src="img/item-list-and-list-icon-cocept-vector.jpg">list item 
+      4</div>
   </div>
   <div id="right"></div>
 
 </div>
 
 <script>
-  let list = document.getElementsByClassName("list");
-  let rightBox =document.getElementById("right");
-  let leftBox =document.getElementById("left");
+ let listItems = document.querySelectorAll(".list");  // Get all draggable elements
+        let rightBox = document.getElementById("right");  
+        let leftBox = document.getElementById("left");  
+        let selected = null;  // This will store the dragged item
 
-  for(list of  lists){
-      list.addEventListener("dragstart", function(e){
-         let selected = e.target;
+        listItems.forEach(item => {
+            item.draggable = true;  // Ensure items are draggable
 
-      rightbox.addEventListener("dragover", function(e){
-        e.preventDefault();
-      })
-     rightBox.addEventListener("drop", function(e){
-      rightbox.appendChild(selected);
-      selected = null;
-     });
-     leftBox.addEventListener("dragover", function(e){
-        e.preventDefault();
-      })
-     leftBox.addEventListener("drop", function(e){
-      leftBox.appendChild(selected);
-      selected = null;
-     });
-    })
-  }
+            item.addEventListener("dragstart", function(e) {
+                selected = e.target;  // Store the dragged element
+            });
+        });
+
+        [leftBox, rightBox].forEach(box => {
+            box.addEventListener("dragover", function(e) {
+                e.preventDefault();  // Allow dropping
+            });
+
+            box.addEventListener("drop", function(e) {
+                if (selected) {
+                    box.appendChild(selected);  // Move the dragged element to the new box
+                    selected = null;  // Clear selection
+                }
+            });
+        });
 </script>
 
 
